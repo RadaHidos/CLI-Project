@@ -1,18 +1,18 @@
 import { createInterface } from "readline";
 import { stdin as input, stdout as output } from "process";
 
-type ChoiceId = 'A' | "B" | "C" | "D";
+type ChoiceId = "A" | "B" | "C" | "D";
 
 interface Option {
-    id: ChoiceId;
-    text: string;
+  id: ChoiceId;
+  text: string;
 }
 
 interface Question {
-    prompt: string;
-    options: Option[];
-    correct: ChoiceId;
-    explain: string;
+  prompt: string;
+  options: Option[];
+  correct: ChoiceId;
+  explain: string;
 }
 
 const QUESTIONS: Question[] = [
@@ -22,10 +22,11 @@ const QUESTIONS: Question[] = [
       { id: "A", text: "Sydney" },
       { id: "B", text: "Melbourne" },
       { id: "C", text: "Canberra" },
-      { id: "D", text: "Perth" }
+      { id: "D", text: "Perth" },
     ],
     correct: "C",
-    explain: "Canberra was chosen as a compromise between Sydney and Melbourne."
+    explain:
+      "Canberra was chosen as a compromise between Sydney and Melbourne.",
   },
   {
     prompt: "Which river is the longest in the world by length (most cited)?",
@@ -33,10 +34,11 @@ const QUESTIONS: Question[] = [
       { id: "A", text: "Nile" },
       { id: "B", text: "Amazon" },
       { id: "C", text: "Yangtze" },
-      { id: "D", text: "Mississippi–Missouri" }
+      { id: "D", text: "Mississippi–Missouri" },
     ],
     correct: "A",
-    explain: "Nile vs. Amazon is debated, but Nile is most commonly cited in textbooks."
+    explain:
+      "Nile vs. Amazon is debated, but Nile is most commonly cited in textbooks.",
   },
   {
     prompt: "Which country has the most natural lakes?",
@@ -44,10 +46,10 @@ const QUESTIONS: Question[] = [
       { id: "A", text: "Canada" },
       { id: "B", text: "Finland" },
       { id: "C", text: "Russia" },
-      { id: "D", text: "United States" }
+      { id: "D", text: "United States" },
     ],
     correct: "A",
-    explain: "Canada has more than half of the world’s natural lakes."
+    explain: "Canada has more than half of the world’s natural lakes.",
   },
   {
     prompt: "Mount Kilimanjaro is in which country?",
@@ -55,10 +57,10 @@ const QUESTIONS: Question[] = [
       { id: "A", text: "Kenya" },
       { id: "B", text: "Tanzania" },
       { id: "C", text: "Uganda" },
-      { id: "D", text: "Ethiopia" }
+      { id: "D", text: "Ethiopia" },
     ],
     correct: "B",
-    explain: "Kilimanjaro is in northern Tanzania, near the Kenyan border."
+    explain: "Kilimanjaro is in northern Tanzania, near the Kenyan border.",
   },
   {
     prompt: "Which desert is the largest hot desert?",
@@ -66,10 +68,11 @@ const QUESTIONS: Question[] = [
       { id: "A", text: "Gobi" },
       { id: "B", text: "Kalahari" },
       { id: "C", text: "Sahara" },
-      { id: "D", text: "Arabian" }
+      { id: "D", text: "Arabian" },
     ],
     correct: "C",
-    explain: "Sahara is the largest hot desert (Antarctica and Arctic are cold deserts)."
+    explain:
+      "Sahara is the largest hot desert (Antarctica and Arctic are cold deserts).",
   },
   {
     prompt: "Which sea separates Europe and Africa?",
@@ -77,10 +80,11 @@ const QUESTIONS: Question[] = [
       { id: "A", text: "Baltic Sea" },
       { id: "B", text: "Mediterranean Sea" },
       { id: "C", text: "Black Sea" },
-      { id: "D", text: "Red Sea" }
+      { id: "D", text: "Red Sea" },
     ],
     correct: "B",
-    explain: "The Mediterranean lies between southern Europe and northern Africa."
+    explain:
+      "The Mediterranean lies between southern Europe and northern Africa.",
   },
   {
     prompt: "Which country does NOT border Germany?",
@@ -88,10 +92,10 @@ const QUESTIONS: Question[] = [
       { id: "A", text: "Denmark" },
       { id: "B", text: "Netherlands" },
       { id: "C", text: "Ukraine" },
-      { id: "D", text: "Czechia" }
+      { id: "D", text: "Czechia" },
     ],
     correct: "C",
-    explain: "Germany borders 9 countries; Ukraine is not one of them."
+    explain: "Germany borders 9 countries; Ukraine is not one of them.",
   },
   {
     prompt: "What is the smallest country in the world by area?",
@@ -99,10 +103,10 @@ const QUESTIONS: Question[] = [
       { id: "A", text: "Monaco" },
       { id: "B", text: "Vatican City" },
       { id: "C", text: "Nauru" },
-      { id: "D", text: "San Marino" }
+      { id: "D", text: "San Marino" },
     ],
     correct: "B",
-    explain: "Vatican City is ~0.49 km², the smallest by area and population."
+    explain: "Vatican City is ~0.49 km², the smallest by area and population.",
   },
   {
     prompt: "Which city is furthest south?",
@@ -110,10 +114,11 @@ const QUESTIONS: Question[] = [
       { id: "A", text: "Cape Town" },
       { id: "B", text: "Buenos Aires" },
       { id: "C", text: "Sydney" },
-      { id: "D", text: "Auckland" }
+      { id: "D", text: "Auckland" },
     ],
     correct: "D",
-    explain: "Auckland (~37°S) is further south than Sydney (~34°S), Cape Town (~34°S), Buenos Aires (~34.6°S)."
+    explain:
+      "Auckland (~37°S) is further south than Sydney (~34°S), Cape Town (~34°S), Buenos Aires (~34.6°S).",
   },
   {
     prompt: "Which country has the largest population?",
@@ -121,16 +126,16 @@ const QUESTIONS: Question[] = [
       { id: "A", text: "United States" },
       { id: "B", text: "India" },
       { id: "C", text: "China" },
-      { id: "D", text: "Indonesia" }
+      { id: "D", text: "Indonesia" },
     ],
     correct: "B",
-    explain: "As of mid-2020s, India slightly exceeds China in population."
-  }
+    explain: "As of mid-2020s, India slightly exceeds China in population.",
+  },
 ];
 
-function printQuestions (q:Question, idx:number , total: number){
-    console.log(` \nQ${idx + 1}/${total} : ${q.prompt}`)
-    for(const option of q.options) console.log(`${ option.id}: ${option.text}`)
+function printQuestions(q: Question, idx: number, total: number) {
+  console.log(` \nQ${idx + 1}/${total} : ${q.prompt}`);
+  for (const option of q.options) console.log(`${option.id}: ${option.text}`);
 }
 
 // printQuestions(  {
@@ -145,3 +150,41 @@ function printQuestions (q:Question, idx:number , total: number){
 //     explain: "As of mid-2020s, India slightly exceeds China in population."
 //   } , 1 , 1)
 
+function isCheckId(userInput: string): userInput is ChoiceId {
+  return ["A", "B", "C", "D"].includes(userInput.toUpperCase());
+}
+
+const rl = createInterface({ input, output });
+
+async function ask(rl: ReturnType<typeof createInterface>, q: string) {
+  return new Promise<string>((resolve) => rl.question(q, resolve));
+}
+
+async function main() {
+  const quiz = QUESTIONS;
+  let score = 0;
+  for (let i = 0; i < quiz.length; i++) {
+    const q = quiz[i];
+    printQuestions(q, i, quiz.length);
+
+    let choice = "";
+    while (true) {
+      choice = (await ask(rl, "Your answer:")).trim().toUpperCase();
+      if (isCheckId(choice)) break;
+      console.log("Try again: A, B, C, D?");
+    }
+
+    const correct = choice === q.correct;
+
+    if (correct) {
+      score++;
+      console.log(`Correct answer! Bravo! Your score is ${score}`);
+    } else {
+      console.log(`Wrong! Corect answer: ${q.correct}`);
+    }
+    console.log(q.explain);
+  }
+  rl.close();
+}
+
+main();
