@@ -161,6 +161,9 @@ async function ask(rl: ReturnType<typeof createInterface>, q: string) {
 }
 
 async function main() {
+  console.log(
+    "Hello! Welcome to my Geography Quiz! You can only put A, B, C, D"
+  );
   const quiz = QUESTIONS;
   let score = 0;
   for (let i = 0; i < quiz.length; i++) {
@@ -186,5 +189,4 @@ async function main() {
   }
   rl.close();
 }
-
 main();
